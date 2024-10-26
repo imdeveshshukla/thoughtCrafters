@@ -1,7 +1,7 @@
 const express = require("express");
 const zod = require("zod")
 const jwt = require("jsonwebtoken")
-const JWT_SECRET = require("./config");
+require('dotenv').config()
 
 const authMiddleware  = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -14,7 +14,7 @@ if(!authHeader) {
 }
     try{
         // console.log(authHeader);
-        const decoded = jwt.verify(authHeader, JWT_SECRET);
+        const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
         console.log(decoded);
         
         if(decoded.userId){
