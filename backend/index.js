@@ -3,8 +3,8 @@ const jwt  = require("jsonwebtoken");
 const zod  = require("zod");
 const cors = require("cors");
 const { User, Blog } = require("./db");
-const JWT_SECRET = require("./config");
 const { authMiddleware } = require("./middleware");
+require('dotenv').config()
 
 const app = express();
 app.use(express.json());
@@ -46,7 +46,7 @@ app.post('/', async (req,res) => {
 
     const token  = jwt.sign({
         userId
-    }, JWT_SECRET);
+    }, process.env.JWT_SECRET);
 
     return res.json({
         message: "User created Successfully!",
@@ -80,7 +80,7 @@ app.post('/signin', async (req,res) => {
     if(existingUser) {
         const token = jwt.sign({
             UserId
-        }, JWT_SECRET)
+        }, process.env.JWT_SECRET)
 
         res.json({
             token
