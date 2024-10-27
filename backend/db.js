@@ -21,8 +21,8 @@ connectDb();
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,   
-    firstName: String,
-    lastName: String,
+    // firstName: String,
+    // lastName: String,
 })
 
 const blogSchema = new mongoose.Schema({

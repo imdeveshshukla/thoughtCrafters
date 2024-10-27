@@ -8,11 +8,12 @@ require('dotenv').config()
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 const signupSchema = zod.object({
     email: zod.string().email(),
-    firstName: zod.string(),
-    lastName: zod.string(),
+    // firstName: zod.string(),
+    // lastName: zod.string(),
     password: zod.string()
 })
 
@@ -24,7 +25,7 @@ app.post('/', async (req,res) => {
             messsage: "IncorrectInputs"
         })
     }
-
+    
     const existingUser = await User.findOne({
         email: req.body.email,
     })
@@ -38,17 +39,15 @@ app.post('/', async (req,res) => {
     const user =  await User.create({
         email: req.body.email,
         password: req.body.password,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+        // firstname: req.body.firstname,
+        // lastname: req.body.lastname,
     })
 
     const userId = user._id;
-
     const token  = jwt.sign({
         userId
     }, process.env.JWT_SECRET);
-
-    return res.json({
+    return res.status(200).json({
         message: "User created Successfully!",
         token: token,
     })
@@ -63,7 +62,7 @@ const signinSchema = zod.object({
 
 app.post('/signin', async (req,res) => {
     const body =  req.body;
-    const  { success} = signinSchema.safeParse(req.body);
+    const  { success } = signinSchema.safeParse(req.body);
     if(!success) {
         return res.status(411).json({
             messsage: "IncorrectInputs"
@@ -75,11 +74,11 @@ app.post('/signin', async (req,res) => {
         password: body.password
     })
 
-    const UserId = existingUser._id;
+    const userId = existingUser._id;
 
     if(existingUser) {
         const token = jwt.sign({
-            UserId
+            userId
         }, process.env.JWT_SECRET)
 
         res.json({
