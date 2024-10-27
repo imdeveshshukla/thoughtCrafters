@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
 
 const blogSchema = new mongoose.Schema({
     email: String,
-    blog: String,   
+    title: String,
+    author: String,
+    blog: String,
+    date: Date
 })
 
 const User = mongoose.model('User', userSchema);

@@ -97,10 +97,18 @@ app.post('/signin', async (req,res) => {
 //     blog: String
 // })
 
+// email: String,
+//     title: String,
+//     author: String,
+//     blog: String,
+//     date: Date
+
 app.post('/createpost', authMiddleware, async (req,res) => {
-    console.log("test")
     const post =  await Blog.create({
         email: req.body.email,
+        title: req.body.title,
+        author: req.body.author,
+        date: new Date().getDate(),
         blog: req.body.blog
     })
     console.log(post);
@@ -111,6 +119,29 @@ app.post('/createpost', authMiddleware, async (req,res) => {
         message: "Posted succesfully!"
     })
     return;
+})
+
+app.get('/feed', async (req,res) => {
+
+    const filter = req.query.filter || "";
+
+    const blogs = await Blog.find({
+        $or: [{
+            email: {
+                "$regex" : filter
+            }
+        },{
+            blog: {
+                "$regex" : filter
+            }
+        }]
+        })
+        res.json({
+            blog: blogs.map( blogs => ({
+            blog: blogs.blog,
+            blog_id: blogs._id
+        }))
+    })
 })
 
 
