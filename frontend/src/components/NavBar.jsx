@@ -20,9 +20,8 @@ function NavItem({ label }) {
 
 function NavList() {
   return (
-    <ul className="mb-4 mt-2 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
+    <ul className="mb-4 text-gray-900 mt-2 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
       <NavItem label="About Us" />
-      <NavItem label="Pricing" />
       <NavItem label="Contact Us" />
     </ul>
   );
@@ -40,28 +39,28 @@ export function NavBar() {
   }, []);
 
   return (
-    <Navbar color="transparent" fullWidth>
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+    <Navbar color="dark" fullWidth>
+      <div className="container mx-auto flex items-center justify-between text-gray-900">
         <Typography
           as="a"
           href="#"
           color="blue-gray"
           className="mr-4 cursor-pointer text-lg font-bold"
         >
-          Material Tailwind
+          thoughtCrafters
         </Typography>
         <div className="hidden lg:block">
           <NavList />
         </div>
-        <Button color="gray" className="hidden lg:inline-block">
+        <Button color="gray" className="hidden lg:inline-block" onClick={()=>(localStorage.clear())}>
           Log out
         </Button>
         <IconButton
           size="sm"
           variant="text"
-          color="blue-gray"
+          color="gray"
           onClick={handleOpen}
-          className="ml-auto inline-block text-blue-gray-900 lg:hidden"
+          className="ml-auto inline-block text-gray-900 lg:hidden"
         >
           {open ? (
             <XMarkIcon className="h-6 w-6" strokeWidth={2} />
@@ -74,7 +73,7 @@ export function NavBar() {
         <div className="mt-2 rounded-xl bg-white py-2">
           <NavList />
           <Button className="mb-2" fullWidth>
-            Sign in
+            Log out
           </Button>
         </div>
       </Collapse>

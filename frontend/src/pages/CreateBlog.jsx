@@ -7,7 +7,25 @@ export function CreateBlog() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit({ title, content }) {
-    
+    console.log(title+" "+content);
+    try {
+      const res = await axios.post("http://localhost:3000/createpost",{
+        title,
+        blog:content
+      },
+      {
+        headers:{
+          'Authorization':localStorage.getItem("token")
+        }
+      }
+    )
+      if(res.data)
+      {
+        nav('/')
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   if (loading) return <>...</>;

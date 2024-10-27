@@ -2,6 +2,7 @@ import axios from "axios";
 import Auth from "../components/Auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
 
 export default function Signup(){
     const [email,SetEmail] = useState("");
@@ -30,6 +31,7 @@ export default function Signup(){
         })();
     }
     return <>
+        <NavBar/>
         <Auth page={"sign up"} email={email} SetEmail={SetEmail} pass={pass} SetPass={SetPass} onClick={signup}/>
     </>
 }

@@ -104,10 +104,17 @@ app.post('/signin', async (req,res) => {
 //     date: Date
 
 app.post('/createpost', authMiddleware, async (req,res) => {
+    console.log(req.userId);
+    
+    const user = await User.findOne({
+        _id:req.userId
+    })
+    console.log(user);
+    
     const post =  await Blog.create({
-        email: req.body.email,
+        email: user.email,
         title: req.body.title,
-        author: req.body.author,
+        author: user.email,
         date: new Date().getDate(),
         blog: req.body.blog
     })
@@ -137,11 +144,8 @@ app.get('/feed', async (req,res) => {
         }]
         })
         res.json({
-            blog: blogs.map( blogs => ({
-            blog: blogs.blog,
-            blog_id: blogs._id
-        }))
-    })
+            blogs
+        })
 })
 
 
